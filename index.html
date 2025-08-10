@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shambhu Raje Group - भाड्याची यादी</title>
+    <style>
+        body {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #6f42c1;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 1.5em;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .item-list {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f1f1f1;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<header>Shambhu Raje Group</header>
+
+<div class="container">
+    <label>ग्राहकाचा मोबाईल नंबर:</label>
+    <input type="tel" id="customerPhone" placeholder="उदा. 9876543210">
+
+    <div class="item-list">
+        <label>पातेल (₹50)</label>
+        <input type="number" id="patel" placeholder="संख्या टाका">
+
+        <label>जग (₹5)</label>
+        <input type="number" id="jug" placeholder="संख्या टाका">
+
+        <label>वगराळ (₹5)</label>
+        <input type="number" id="vagaral" placeholder="संख्या टाका">
+
+        <label>बकेट (₹10)</label>
+        <input type="number" id="bucket" placeholder="संख्या टाका">
+
+        <label>बादली (₹10)</label>
+        <input type="number" id="badli" placeholder="संख्या टाका">
+
+        <label>पळी (₹5)</label>
+        <input type="number" id="pali" placeholder="संख्या टाका">
+
+        <label>भातवाडी (₹5)</label>
+        <input type="number" id="bhatwadi" placeholder="संख्या टाका">
+
+        <label>शेगडी (₹150)</label>
+        <input type="number" id="shegadi" placeholder="संख्या टाका">
+
+        <label>चपाटी शेगडी (₹250)</label>
+        <input type="number" id="chapatiShegadi" placeholder="संख्या टाका">
+    </div>
+
+    <button onclick="sendToWhatsApp()">WhatsApp वर पाठवा</button>
+</div>
+
+<script>
+function sendToWhatsApp() {
+    let phone = document.getElementById("customerPhone").value;
+    if (!phone) {
+        alert("कृपया ग्राहकाचा मोबाईल नंबर टाका");
+        return;
+    }
+
+    let prices = {
+        patel: 50, jug: 5, vagaral: 5, bucket: 10, badli: 10,
+        pali: 5, bhatwadi: 5, shegadi: 150, chapatiShegadi: 250
+    };
+
+    let items = [
+        { name: "पातेल", qty: document.getElementById("patel").value, price: prices.patel },
+        { name: "जग", qty: document.getElementById("jug").value, price: prices.jug },
+        { name: "वगराळ", qty: document.getElementById("vagaral").value, price: prices.vagaral },
+        { name: "बकेट", qty: document.getElementById("bucket").value, price: prices.bucket },
+        { name: "बादली", qty: document.getElementById("badli").value, price: prices.badli },
+        { name: "पळी", qty: document.getElementById("pali").value, price: prices.pali },
+        { name: "भातवाडी", qty: document.getElementById("bhatwadi").value, price: prices.bhatwadi },
+        { name: "शेगडी", qty: document.getElementById("shegadi").value, price: prices.shegadi },
+        { name: "चपाटी शेगडी", qty: document.getElementById("chapatiShegadi").value, price: prices.chapatiShegadi }
+    ];
+
+    let message = "📋 भाड्याची यादी\n";
+    message += "पत्ता: तुजारपूर, तालुका वाळवा, जिल्हा सांगली\n";
+    message += "मोबाईल: 7350880573\n\n";
+
+    let total = 0;
+    items.forEach(item => {
+        if (item.qty && item.qty > 0) {
+            let itemTotal = item.price * item.qty;
+            total += itemTotal;
+            message += `${item.name} - ₹${item.price} x ${item.qty} = ₹${itemTotal}\n`;
+        }
+    });
+
+    message += `\nएकूण: ₹${total}`;
+
+    let url = `https://wa.me/91${phone}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+}
+</script>
+
+</body>
+</html>
